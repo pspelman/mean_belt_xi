@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-require('./models/Replace_Me_With_An_Object');
+require('./models/Pets');
 
 
 var dojoRouter = require('./routes/mean_belts');

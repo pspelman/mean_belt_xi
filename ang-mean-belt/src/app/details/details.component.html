@@ -1,0 +1,49 @@
+<input type="button" name="homePage" class="btn" [routerLink]="['../../home']" value="Back to the Animals">
+<div *ngIf="selected_pet; let selected_pet">
+<table class="table-info table-bordered">
+  <tr>
+    <td>
+      id:
+    </td>
+    <td>
+      {{selected_pet._id}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Name
+    </td>
+    <td>
+      {{selected_pet.pet_name }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      description
+    </td>
+    <td>{{selected_pet.description}}</td>
+  </tr>
+  <tr>
+    <td>
+      skills
+    </td>
+    <td>
+      <ul>
+        <li *ngFor="let skill of selected_pet.skills">
+          {{skill.skill}}
+        </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      likes
+    </td>
+    <td>
+      {{selected_pet.likes}}
+    </td>
+  </tr>
+</table>
+  <input type="button" (click)="likeThisPet(selected_pet._id)" class="btn" value="Like this pet">
+  <input type="button" (click)="adoptThisPet(selected_pet._id)" class="btn" value="Adopt this pet">
+</div>

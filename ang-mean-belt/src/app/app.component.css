@@ -1,0 +1,58 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+
+.btn{
+  background-color: #cda3a2;
+  border: 1px solid black;
+}
+
+.container {
+  background-color: transparent;
+  border: 2px solid black;
+  border-radius: 10px;
+  /*width: 90%;*/
+  /*margin: auto;*/
+  /*min-height: 400px;*/
+  /*font-size: 14pt;*/
+  max-height: 100%;
+  /*display: block;*/
+
+}
+
+/*.component{*/
+/*margin: 2%;*/
+/*max-height: 50%;*/
+/*}*/
+
+.form-control.ng-invalid.ng-touched.ng-dirty {
+  border: 2px solid red;
+}
+
+.ang_logo{
+  width: 10%;
+  position: absolute;
+  right: 15%;
+  top: 0%;
+}
+
+
+.navbar{
+  border: 3px solid dodgerblue;
+  border-radius: 10px;
+}
+
+button{
+  background-color: dodgerblue;
+  color: #ddcb5d;
+  /*outline-color: greenyellow;*/
+  text-shadow: 2px 2px #000;
+  font-size: 18px;
+  width: auto;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+button:hover{
+  background-color: #878bff;
+}
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}

@@ -1,0 +1,128 @@
+<h1>welcome to edit page</h1>
+<label>Parameter value passed: {{ pet_id }}</label>
+<hr>
+
+
+
+<section class="sample-app-content" *ngIf="selected_pet">
+  <h3>Edit Pet Details</h3>
+  <input type="button" name="homePage" class="btn" [routerLink]="['../home']" value="Back to the Animals">
+  <hr><form (submit)="createNewPet()" onsubmit="return false" name="edit_pet_form" >
+  <div class="form-group">
+    <label for="pet_name">
+      Pet Name:
+    </label>
+    <input [(ngModel)]="selected_pet.pet_name"
+           required
+           minlength="3"
+           name="pet_name"
+           #pet_name="ngModel"
+           (change)="logChange(pet_name)"
+           id="pet_name"
+           type="text"
+           class="form-control" >
+
+    <div class="alert alert-danger" *ngIf="(!pet_name.valid && !pet_name.untouched && pet_name.dirty);" >
+      <div *ngIf="pet_name.errors.required">Blank pet names are not allowed</div>
+      <div *ngIf="pet_name.errors.minlength">Pet names must contain more than {{ pet_name.errors.minlength.requiredLength }} letters</div>
+    </div>
+
+    <br/>
+    <label for="pet_type">
+      Type:
+    </label>
+    <input [(ngModel)]="selected_pet.type"
+           required
+           minlength="3"
+           name="pet_type"
+           #pet_type="ngModel"
+           id="pet_type"
+           type="text"
+           class="form-control"
+           (change)="logChange(pet_type)">
+    <!--front-end validation here-->
+    <div class="alert alert-danger" *ngIf="(!pet_type.valid && !pet_type.untouched && pet_type.dirty);" >
+      Make sure the pet type is at least 3 characters in length
+      <span class="alert alert-danger" *ngIf="backend_errors">Errors from database</span>
+    </div>
+
+    <br/>
+    <label for="description">
+      Description:
+    </label>
+    <input [(ngModel)]="selected_pet.description"
+           required
+           minlength="3"
+           name="description"
+           #description="ngModel"
+           id="description"
+           type="text"
+           class="form-control"
+           (change)="logChange(description)">
+    <br/>
+    <label for="skill_one">Skill #1</label>
+
+    <input [(ngModel)]="selected_pet.skills[0]"
+           minlength="3"
+           name="skill_one"
+           #skill_one="ngModel"
+           id="skill_one"
+           type="text"
+           class="form-control"
+           (change)="logChange(skill_one)"/>
+
+    <label for="skill_two">Skill #2</label>
+    <!--<input [(ngModel)]="selected_pet.skill_two"-->
+    <input [(ngModel)]="selected_pet.skills[1]"
+           [ngModelOptions]="{standalone: true}"
+           minlength="3"
+           name="skill_two"
+           #skill_two="ngModel"
+           id="skill_two"
+           type="text"
+           class="form-control"
+           (change)="logChange(skill_two)"/>
+
+    <label for="skill_three">Skill #3</label>
+    <!--<input [(ngModel)]="selected_pet.skill_three"-->
+    <input [(ngModel)]="selected_pet.skills[2]"
+           minlength="3"
+           name="skill_three"
+           #skill_three="ngModel"
+           id="skill_three"
+           type="text"
+           class="form-control"
+           (change)="logChange(skill_three)"/>
+
+  </div>
+  <button type="submit" name="submit">Submit</button>
+  <button type="reset" name="reset" (click)="cancelEditRequest(pet_id)">Cancel new registration</button>
+
+</form>
+
+
+
+
+
+
+
+  <!--<h1>Template-driven Form Example:</h1>-->
+  <!--<form #f="ngForm" name="pet_details" (ngSubmit)="onSubmitTemplateBased()">-->
+    <!--<p>-->
+      <!--<label>First Name:</label>-->
+      <!--<input type="text"-->
+             <!--[(ngModel)]="selected_pet.pet_name" name="pet_name" required value="{{selected_pet.pet_name}}">-->
+    <!--</p>-->
+    <!--<p>-->
+      <!--&lt;!&ndash;<label>Password:</label>&ndash;&gt;-->
+      <!--&lt;!&ndash;<input type="password"&ndash;&gt;-->
+             <!--&lt;!&ndash;[(ngModel)]="pet.password" required>&ndash;&gt;-->
+    <!--</p>-->
+    <!--<p>-->
+      <!--<button type="submit" [disabled]="!f.valid">Submit</button>-->
+      <!--<button type="reset" [routerLink]="['../../details/'+12345]" name="cancel">Cancel</button>-->
+      <!--<button type="reset" name="reset" (click)="cancelEditRequest(selected_pet._id)">Cancel new registration</button>-->
+
+    <!--</p>-->
+  <!--</form>-->
+</section>

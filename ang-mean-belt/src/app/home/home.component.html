@@ -1,0 +1,100 @@
+{{ title }}<br/>
+Know a pet that needs a home?<br/>
+<input type="button" name="details" value="Register pet" class="btn" [routerLink]="['../registration']" />
+<br/>
+
+<!--<input type="button" name="details" class="btn" [routerLink]="['../details']" value="View details" ><br/>-->
+<input type="button" name="viewSortedAnimalListBtn" class="btn" (click)="navSortedAnimalsPage()" value="Nav Sorted Animals Page">
+
+<br/>
+
+
+
+<div *ngIf="pet_list">
+  <table class="table">
+    <thead>
+      <th>
+        Name
+      </th>
+      <th>
+        type
+      </th>
+      <th>
+        description
+      </th>
+      <th>
+        action
+      </th>
+    </thead>
+    <tr *ngFor="let pet of pet_list">
+      <td>
+        {{pet.pet_name}}
+      </td>
+      <td>
+        {{pet.type}}
+      </td>
+      <td>
+        {{pet.description}}
+      </td>
+      <td>
+        <input type="button" name="details" class="btn" [routerLink]="['../details/'+pet._id]" value="Details" ><br/>
+        <input type="button" name="edit" class="btn" [routerLink]="['../edit/'+pet._id]" value="Edit" ><br/>
+        <!--<input type="button"-->
+               <!--name="editPetDetailsBtn"-->
+               <!--id="editPetDetailsBtn"-->
+               <!--class="btn"-->
+               <!--value="Edit"-->
+               <!--(click)="navEditPet(temp_pet_id)" />-->
+        <br/>
+        {{pet._id}}
+      </td>
+    </tr>
+
+
+  </table>
+
+
+
+</div>
+<!--<input type="button" name="details" class="btn" [routerLink]="['../details']" value="View details" ><br/>-->
+
+
+<!--<label for="registration">Nav to register a new animal</label><br/>-->
+<!--<input type="button" name="registration" id="registration" class="btn" (click)="navRegistration()" value="Nav to registration" /><br/>-->
+
+<br/>
+<!--<label for="editPetDetailsBtn">Edit this pet</label>-->
+<!--<input type="button"-->
+       <!--name="editPetDetailsBtn"-->
+       <!--id="editPetDetailsBtn"-->
+       <!--class="btn"-->
+       <!--value="Edit this pet"-->
+       <!--(click)="navEditPet(temp_pet_id)" />-->
+<!--One <input type="radio" name="radioBtn" (click)="setValue('1')" /><br/>-->
+<!--Two <input type="radio" name="radioBtn" (click)="setValue('2')" /><br/>-->
+<!--Three <input type="radio" name="radioBtn" (click)="setValue('3')" /><br/>-->
+
+<br/>
+
+<!--<div *ngIf="pet_list; let pet_list" >-->
+  <!--<h3> {{pet_list[0].pet_name}}-->
+<!--</div>-->
+
+<!--<div *ngIf="pet_list; let pet_list">-->
+  <!--id: {{pet_list[0]._id}}<br/>-->
+  <!--name: {{pet_list[0].pet_name }}<br/>-->
+  <!--description: {{pet_list[0].description}}<br/>-->
+  <!--skills:<br/>-->
+  <!--<ul>-->
+    <!--<li *ngFor="let skill of pet_list[0].skills">{{skill.skill}}</li>-->
+  <!--</ul>-->
+<!--</div>-->
+
+<div style="text-align:center">
+  <h1>
+</h1>
+  <!--<img width="300" class="ang_logo" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">-->
+</div>
+
+
+<base href="/">

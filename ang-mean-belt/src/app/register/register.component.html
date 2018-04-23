@@ -1,0 +1,160 @@
+<br/>
+<label>Parameter value passed: {{ id }}</label>
+<h3>New Pet</h3>
+<input type="button" name="homePage" class="btn" [routerLink]="['../home']" value="Back to the Animals">
+<hr><form (submit)="createNewPet()" onsubmit="return false" name="new_pet_form" >
+  <div class="form-group">
+    <label for="pet_name">
+      Pet Name:
+    </label>
+    <input [(ngModel)]="new_pet.pet_name"
+           required
+           minlength="3"
+           name="pet_name"
+           #pet_name="ngModel"
+           (change)="logChange(pet_name)"
+           id="pet_name"
+           type="text"
+           class="form-control" >
+
+    <div class="alert alert-danger" *ngIf="(!pet_name.valid && !pet_name.untouched && pet_name.dirty);" >
+      <div *ngIf="pet_name.errors.required">Blank pet names are not allowed</div>
+      <div *ngIf="pet_name.errors.minlength">Pet names must contain more than {{ pet_name.errors.minlength.requiredLength }} letters</div>
+    </div>
+
+    <br/>
+    <label for="pet_type">
+      Type:
+    </label>
+    <input [(ngModel)]="new_pet.type"
+           required
+           minlength="3"
+           name="pet_type"
+           #pet_type="ngModel"
+           id="pet_type"
+           type="text"
+           class="form-control"
+           (change)="logChange(pet_type)">
+<!--front-end validation here-->
+    <div class="alert alert-danger" *ngIf="(!pet_type.valid && !pet_type.untouched && pet_type.dirty);" >
+      Make sure the pet type is at least 3 characters in length
+      <span class="alert alert-danger" *ngIf="backend_errors">Errors from database</span>
+    </div>
+
+    <br/>
+    <label for="description">
+      Description:
+    </label>
+    <input [(ngModel)]="new_pet.description"
+           required
+           minlength="3"
+           name="description"
+           #description="ngModel"
+           id="description"
+           type="text"
+           class="form-control"
+           (change)="logChange(description)">
+    <br/>
+    <label for="skill_one">Skill #1</label>
+
+    <input [(ngModel)]="new_pet.skills[0]"
+           minlength="3"
+           name="skill_one"
+           #skill_one="ngModel"
+           id="skill_one"
+           type="text"
+           class="form-control"
+           (change)="logChange(skill_one)"/>
+    <label for="skill_two">Skill #2</label>
+    <!--<input [(ngModel)]="new_pet.skill_two"-->
+    <input [(ngModel)]="new_pet.skills[1]"
+           [ngModelOptions]="{standalone: true}"
+           minlength="3"
+           name="skill_two"
+           #skill_two="ngModel"
+           id="skill_two"
+           type="text"
+           class="form-control"
+           (change)="logChange(skill_two)"/>
+    <label for="skill_three">Skill #3</label>
+    <!--<input [(ngModel)]="new_pet.skill_three"-->
+    <input [(ngModel)]="new_pet.skills[2]"
+           minlength="3"
+           name="skill_three"
+           #skill_three="ngModel"
+           id="skill_three"
+           type="text"
+           class="form-control"
+           (change)="logChange(skill_three)"/>
+
+  </div>
+    <!--<input ngModel required minlength="3" name="pet_name" #pet_name="ngModel" (change)="logChange(pet_name)" id="pet_name" type="text" class="form-control">-->
+
+    <!--<input ngModel required minlength="3" name="pet_name" #pet_name="ngModel" (change)="logChange(pet_name)" id="pet_name" type="text" class="form-control">-->
+
+    <!--<input ngModel required minlength="3" name="pet_name" #pet_name="ngModel" (change)="logChange(pet_name)" id="pet_name" type="text" class="form-control">-->
+
+  <!--<div class="form-group">-->
+    <!--<label for="comment">-->
+      <!--Comment-->
+    <!--</label>-->
+    <!--<textarea ngModel name="comment" #comment="ngModel" (change)="logChange(comment)" id="comment" cols="30" rows="10" class="form-control">-->
+<!--</textarea>-->
+  <!--</div>-->
+
+  <button type="submit" name="submit">Submit</button>
+  <button type="reset" name="reset" (click)="navHome()">Cancel new registration</button>
+  <!--<button type="submit" [disabled]="!invalid" class="btn-primary">Submit</button>-->
+
+</form>
+
+
+
+<div *ngIf="err_list">
+  <p>There were errors with the pet registration:</p>
+  <div *ngFor="let err of err_list">
+    {{err}}
+  </div>
+</div>
+
+
+<!--<form #loginForm="ngForm">-->
+  <!--<input type="text" required>-->
+  <!--<button  type="submit"  [disabled]="loginForm.form.invalid">Submit</button>-->
+<!--</form>-->
+
+
+  <!--<br/>-->
+  <!--<input type="button" name="navMainPageBtn" class="btn" routerLink="../home" value="Main Page"/>-->
+  <!--<div class="form-group">-->
+    <!--<h3>This is going to be a form</h3>-->
+    <!--<p> {{ newPet | json }} </p>-->
+    <!--<form (submit)="onSubmit()" onsubmit="return false" name="new_pet_form">-->
+      <!--&lt;!&ndash; use the json pipe to see how newPet changes in real time &ndash;&gt;-->
+      <!--<label>Title: </label>-->
+      <!--<input type="text" name="newPet.title" [(ngModel)]="newPet.title" />-->
+      <!--<br/>-->
+      <!--<label>Description: </label><input type="text" name="newPet.description" [(ngModel)]="newPet.description" />-->
+      <!--<input type="submit" value="Create Task" />-->
+    <!--</form>-->
+    <!--<br/>-->
+    <!--&lt;!&ndash;<h3>Task Lookup</h3>&ndash;&gt;-->
+    <!--&lt;!&ndash;<input type="text" name="getTask.id" [(ngModel)]="getTask.id" (keyup.enter)="getTaskById(getTask.id)" />&ndash;&gt;-->
+    <!--&lt;!&ndash;<button (click)="getTaskById(getTask.id)">Go</button>&ndash;&gt;-->
+
+    <!--<div class="pet_edit_form">-->
+      <!--<h2>Edit Pet</h2>-->
+      <!--<p>select a pet from the list to edit it here</p>-->
+      <!--&lt;!&ndash;if task is selected to be edited, populate it in this form&ndash;&gt;-->
+      <!--<form (submit)="updatePet()" onsubmit="return false">-->
+        <!--&lt;!&ndash; use the json pipe to see how newPet changes in real time &ndash;&gt;-->
+        <!--<label>Title: {{selected_pet.title}} </label><input type="text" name="selected_pet.title" [(ngModel)]="selected_pet.title" /><br/>-->
+        <!--<label>Description: </label><input type="text" name="selected_pet.description" [(ngModel)]="selected_pet.description" /><br/>-->
+        <!--<label>Completed: </label><input type="text" name="selected_pet.completed" [(ngModel)]="selected_pet.completed" /><br/>-->
+        <!--<input type="button" name="selected_pet.completed" value="toggle completed" (click)="toggle_completed_status()">-->
+
+        <!--<br/>-->
+        <!--<input type="submit" value="Update Pet" />-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->

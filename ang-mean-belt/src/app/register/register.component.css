@@ -1,0 +1,21 @@
+@import "../app.component.css";
+.form-control[_ngcontent-c1]{
+  width: 75%;
+  border: 1px solid #696e73;
+}
+
+
+/*input {*/
+  /*display: block;*/
+  /*padding: 0px;*/
+  /*margin: 0px;*/
+  /*border: 1px;*/
+  /*width: 75%;*/
+/*}*/
+
+/*td {*/
+  /*margin: 0px;*/
+  /*padding: 0px;*/
+  /*border: 1px solid black;*/
+/*}*/
+
