@@ -6,7 +6,7 @@
 }
 
 .container {
-  background-color: transparent;
+  background-color: rgba(84, 141, 141, 0.55);
   border: 2px solid black;
   border-radius: 10px;
   /*width: 90%;*/

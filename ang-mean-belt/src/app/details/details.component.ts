@@ -11,6 +11,7 @@ import {DataManagerService} from "../data-manager.service";
 export class DetailsComponent implements OnInit {
   public selected_pet: any;
   pet_id: any;
+  backend_errors: any;
 
   // constructor(private _http: DataManagerService, private route: Router, private activatedRoute = ActivatedRoute) {
   constructor(private _http: DataManagerService, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -45,11 +46,20 @@ export class DetailsComponent implements OnInit {
 
   }
 
-  adoptThisPet(_id: any) {
-    console.log(`recieved ADOPT request for pet: `,_id);
-    let adoption = this._http.adoptPet();
-    adoption.subscribe(result => {
-      console.log(`adoption result:`,result);
+  adoptThisPet(pet_id: any) {
+    console.log(`recieved ADOPT request for pet: `,pet_id);
+    let adoption = this._http.adoptPet(pet_id);
+    adoption.subscribe(response => {
+      console.log(`adoption result:`,response);
+      if (!response['errs'].has_errors){
+        console.log(`no errors!`,);
+        this.router.navigateByUrl('/home');
+
+      } else if (response['errs'].has_errors){
+        this.backend_errors = response['errs'].err_list;
+        console.log(`got backend errors`,this.backend_errors);
+        // this.error_list = response['errs'].error_list;
+      }
     });
 
   }

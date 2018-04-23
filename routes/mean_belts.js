@@ -162,6 +162,120 @@ router.put('/pets/like/:id', function (req, res) {
 
 
 
+//FIXME: standardize sending back errors
+//update an author's name
+router.put('/pets/:id', function (req, res) {
+    let errs = new errorObject();
+    let err_holder = [];
+    console.log(`ID: `,req.params.id);
+    console.log(`reached pet updater. Body: `, req.body);
+
+
+    var opts = {runValidators: true , context: 'query'};
+    Pets.findOneAndUpdate({_id: req.params.id}, {
+        pet_name: req.body.pet_name,
+        type: req.body.type,
+        description: req.body.description,
+        // "$set": {
+        //     "skills.0": req.body.skills[0],
+        // }
+        // skills: [req.body.skills[0], req.body.skills[1], req.body.skills[2]],
+            }, opts, function (err) {
+        if (err) {
+            console.log(`there was an error updating`, err.message);
+            errs.has_errors = true;
+            errs.err_list.push(err.message);
+            res.json({'message': 'problem updating pet', 'errs': errs});
+
+        } else {
+            res.json({'message': 'successfully updated pet', 'errs': errs});
+
+        }
+    });
+
+
+
+    // var validation_errors = [];
+    // var petPromise = new Promise(function (resolve, reject) {
+    //     resolve(Pets.find({_id: req.params.id}, function (err, pet) {
+    //         if (err) {
+    //             console.log(`error finding pet`, err);
+    //         } else {
+    //             console.log(`found pet: `,pet);
+    //             Pets.findOne({ _id: req.body.pet_id }, function (err, pet){
+    //                 pet.pet_name = req.body.pet_name;
+    //                 pet.type = req.body.type;
+    //                 pet.description = req.body.description;
+    //                 pet.skills[0] = req.body.skill_one;
+    //                 pet.skills[1] = req.body.skill_two;
+    //                 pet.skills[2] = req.body.skill_three;
+    //                 // pet.visits.$inc();
+    //                 pet.save();
+    //             });
+    //
+    //
+    //             Pets.update({_id: req.params.id}, {
+    //                 //stuf to update
+    //             }, function (err) {
+    //                 if (err) {
+    //                     console.log(`error`,err);
+    //                 }
+    //             });
+    //         }
+    //
+    //     }).then());
+    // });
+
+
+            // } else {
+            //     var opts = {runValidators: true };
+            //     resolve(Pets.update({_id: req.params.id},
+            //         {
+            //             name_of_pet: req.body.name_of_pet,
+            //         }, opts ));
+            // }
+
+
+
+    // petPromise.then(function (author) {
+    //     console.log(`got the author...proceed to modification`,);
+    //
+    //     var updatePetsPromise = new Promise(function (resolve, reject) {
+    //         if (typeof (req.body.name_of_pet) == 'undefined') {
+    //             reject(validation_errors.push(new Error('Name cannot be empty')));
+    //             res.json({'message': 'Error updating author', 'error': err})
+    //         } else if (req.body.name_of_pet.length < 3) {
+    //             throw new Error('name must be at least 3');
+    //         } else {
+    //             var opts = {runValidators: true };
+    //             resolve(Pets.update({_id: req.params.id},
+    //                 {
+    //                     name_of_pet: req.body.name_of_pet,
+    //                 }, opts ));
+    //         }
+    //     });
+    //     updatePetsPromise.then(function (author) {
+    //         console.log(`updated author successfully`,);
+    //         res.json({'message': 'successful update', 'author': author});
+    //     }).catch(function (err) {
+    //         console.log(`there were problems updating the author`,);
+    //         validation_errors.push(err);
+    //         res.json({'message': 'update failed', error: err.message, 'validation_array':validation_errors.toString()});
+    //     });
+    // }).catch(function (errors) {
+    //     console.log(`caught errors`,errors);
+    // });
+});
+
+
+
+
+
+
+
+
+
+
     //
     // Pet.update({_id: req.params.id}, function (err, pet_data) {
     //     likes:
@@ -255,47 +369,6 @@ router.put('/pets/like/:id', function (req, res) {
 // });
 
 
-//DONE: router.put('/', function(req, res){}
-//FIXME: standardize sending back errors
-//update an author's name
-router.put('/pets/:id', function (req, res) {
-    var validation_errors = [];
-    console.log(`req.body: `,req.body);
-    let pet_id = req.params.id;
-    console.log(`reached single-author NAME UPDATER...getting the author`,);
-    //get the author
-    var petPromise = new Promise(function (resolve, reject) {
-        resolve(Pets.find({_id: req.params.id}));
-    });
-    petPromise.then(function (author) {
-        console.log(`got the author...proceed to modification`,);
-
-        var updatePetsPromise = new Promise(function (resolve, reject) {
-            if (typeof (req.body.name_of_pet) == 'undefined') {
-                reject(validation_errors.push(new Error('Name cannot be empty')));
-                res.json({'message': 'Error updating author', 'error': err})
-            } else if (req.body.name_of_pet.length < 3) {
-                throw new Error('name must be at least 3');
-            } else {
-                var opts = {runValidators: true };
-                resolve(Pets.update({_id: req.params.id},
-                    {
-                        name_of_pet: req.body.name_of_pet,
-                    }, opts ));
-            }
-        });
-        updatePetsPromise.then(function (author) {
-            console.log(`updated author successfully`,);
-            res.json({'message': 'successful update', 'author': author});
-        }).catch(function (err) {
-            console.log(`there were problems updating the author`,);
-            validation_errors.push(err);
-            res.json({'message': 'update failed', error: err.message, 'validation_array':validation_errors.toString()});
-        });
-    }).catch(function (errors) {
-        console.log(`caught errors`,errors);
-    });
-});
 
 
 //FIXME: ADD quote to selected author
@@ -330,12 +403,27 @@ router.put('/add_pet/:pet_id', function (req, res) {
 
 //TODO: router.delete('/', function(req, res){}
 router.delete('/pets/:id', function (req, res) {
+    let errs = new errorObject();
+    let err_holder = [];
+
     console.log(`trying to delete...or adopt...the pet`,);
     let pet_id = req.params.id;
 
     console.log(`pet: ${pet_id}`);
+    Pets.remove({_id: req.params.id}, function (err) {
+        if (err) {
+            errs.has_errors = true;
+            errs.err_list.push(err);
+            res.json({'message': 'Error when deleting pet', 'errs': errs});
 
-    res.json({'message': 'trying to remove pet', 'pet_id': pet_id});
+        } else {
+            res.json({'message': 'successfully deleted pet', 'errs': errs});
+
+        }
+
+    });
+
+    // res.json({'message': 'trying to remove pet', 'pet_id': pet_id});
 
 
 });

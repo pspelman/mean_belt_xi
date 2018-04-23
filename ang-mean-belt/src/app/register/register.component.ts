@@ -21,11 +21,12 @@ export class RegisterComponent implements OnInit {
   skill_two: string="";
   skill_three: string="";
   skills: Array<any>;
+  error_list: any;
+  backend_errors: any;
 
   public id;
   newTask: any;
   newPet: any;
-  backend_errors: any;
 
   constructor(private _http: DataManagerService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => {
@@ -36,9 +37,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.new_pet = {
-      pet_name: null,
-      type: null,
-      description: null,
+      pet_name: '',
+      type: '',
+      description: '',
       skills: [this.skill_one, this.skill_two, this.skill_three]
     };
 
@@ -62,19 +63,31 @@ export class RegisterComponent implements OnInit {
 
   createNewPet(){
     console.log(`trying to create pet with data from form :`,this.new_pet);
-    // this.new_pet.skills = [this.skill_one, this.skill_two, this.skill_three];
-    let observable = this._http.addPet(this.new_pet);
-    let router = this.router
-    observable.subscribe(function (response) {
-      console.log(`Tried to register new pet. Server response: `,response);
-      if (!response['errs'].has_errors){
-        console.log(`no errors!`,);
-        router.navigateByUrl('/home');
-      } else if (response['errs'].has_errors){
-        console.log(`there were errors!`,response['errs'].error_list);
-      }
+    this.backend_errors = null;
 
-    });
+    if (this.validateForm()) {
+      let observable = this._http.addPet(this.new_pet);
+      let router = this.router
+      observable.subscribe(function (response) {
+        console.log(`Tried to register new pet. Server response: `,response);
+        if (!response['errs'].has_errors){
+          console.log(`no errors!`,);
+          router.navigateByUrl('/home');
+
+        } else if (response['errs'].has_errors){
+          this.backend_errors = response['errs'].err_list;
+          console.log(`got backend errors`,this.backend_errors);
+          // console.log(`there were errors!`,response['errs'].error_list);
+          // this.error_list = response['errs'].error_list;
+        }
+
+      });
+
+    } else {
+      alert('you must finish entering data in the form');
+    }
+
+    // this.new_pet.skills = [this.skill_one, this.skill_two, this.skill_three];
   }
 
   // navigateHome() {
@@ -82,17 +95,27 @@ export class RegisterComponent implements OnInit {
   //
   // }
 
-  updatePet() {
-    console.log(`trying to update pet`,);
-
-  }
 
   toggle_completed_status() {
     console.log(`this is the toggle status`,);
   }
 
   validateForm() {
-    console.log(`checking form for valid shit`,);
+    console.log(`checking form for valid inputs`,);
+    if (this.new_pet.pet_name.length &&
+      this.new_pet.description.length &&
+      this.new_pet.type.length) {
+      console.log(`invalid form data`,);
+      return true;
+    } else {
+      console.log(`valid form data`,);
+      return false;
+    }
+    //name
+
+    //type
+    //details
+    //
 
   }
 

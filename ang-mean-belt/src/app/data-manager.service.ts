@@ -74,8 +74,14 @@ export class DataManagerService {
   // }
 
 
-  adoptPet() {
+  adoptPet(pet_id) {
     console.log(`trying to adopt pet`,);
+    return this._http.delete(`/pets/${pet_id}`);
+  }
+
+  updatePetInfo(selected_pet: { pet_id: null; pet_name: null; type: null; description: null; skills: (string | string | string)[] }) {
+    console.log(`trying to update pet info`,);
+    return this._http.put(`/pets/${selected_pet.pet_id}`, selected_pet);
 
   }
 }

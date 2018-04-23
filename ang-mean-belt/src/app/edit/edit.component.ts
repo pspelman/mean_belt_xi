@@ -25,9 +25,10 @@ export class EditComponent implements OnInit {
   skill_two: string="";
   skill_three: string="";
   skills: Array<any>;
-
+  // error_list: any;
 
   selected_pet = {
+    pet_id: null,
     pet_name: null,
     type: null,
     description: null,
@@ -47,6 +48,11 @@ export class EditComponent implements OnInit {
     });
   }
 
+  logChange(change_item: HTMLInputElement) {
+    console.log(`Item changed: `,change_item);
+    console.log(`ViewModel: `,change_item['viewModel']);
+  }
+
   ngOnInit() {
     //it doesn't make tons of sense to go look up the pet in the DB, but maybe someone already adopted it
     //so make a new request for that pet
@@ -57,6 +63,7 @@ export class EditComponent implements OnInit {
     observable.subscribe(data => {
       console.log(`Query for specific pet returned: `,data);
       this.pet_data = data['pet'][0];
+      this.selected_pet.pet_id = data['pet'][0]._id;
       this.selected_pet.pet_name = data['pet'][0].pet_name;
       this.selected_pet.type = data['pet'][0].type;
       this.selected_pet.description = data['pet'][0].description;
@@ -83,6 +90,30 @@ export class EditComponent implements OnInit {
     // });
 
   }
+
+  updatePet() {
+    this.backend_errors = null;
+    console.log(`trying to update pet`,);
+    console.log(``,this.selected_pet);
+    let observable = this._http.updatePetInfo(this.selected_pet);
+    observable.subscribe(response => {
+      console.log(`response from update request: `,response);
+
+
+      if (!response['errs'].has_errors){
+        console.log(`no errors!`,);
+        this.router.navigateByUrl('/home');
+
+      } else if (response['errs'].has_errors){
+        this.backend_errors = response['errs'].err_list;
+        console.log(`got backend errors`,this.backend_errors);
+        // this.error_list = response['errs'].error_list;
+      }
+
+    });
+
+  }
+
 
 
   // cancelEditRequest() {

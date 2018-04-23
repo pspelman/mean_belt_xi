@@ -2,12 +2,16 @@
 <label>Parameter value passed: {{ pet_id }}</label>
 <hr>
 
+<div *ngIf="backend_errors">
+<p *ngFor="let error of backend_errors">{{error}}</p>
+</div>
+
 
 
 <section class="sample-app-content" *ngIf="selected_pet">
   <h3>Edit Pet Details</h3>
-  <input type="button" name="homePage" class="btn" [routerLink]="['../home']" value="Back to the Animals">
-  <hr><form (submit)="createNewPet()" onsubmit="return false" name="edit_pet_form" >
+  <input type="button" name="homePage" class="btn" [routerLink]="['../../home']" value="Back to the Animals">
+  <hr><form (submit)="updatePet()" onsubmit="return false" name="edit_pet_form" >
   <div class="form-group">
     <label for="pet_name">
       Pet Name:
@@ -95,10 +99,11 @@
            (change)="logChange(skill_three)"/>
 
   </div>
-  <button type="submit" name="submit">Submit</button>
+  <button type="submit" name="submit" >Submit</button>
   <button type="reset" name="reset" (click)="cancelEditRequest(pet_id)">Cancel new registration</button>
 
 </form>
+
 
 
 
